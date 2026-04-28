@@ -27,6 +27,7 @@ const AcademicResearch = () => {
     ];
 
     return (
+        <>
         <section id="research" className="py-24 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700/50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -74,6 +75,7 @@ const AcademicResearch = () => {
         </section>
 
         <ResearchSummary isOpen={isResearchOpen} onClose={() => setIsResearchOpen(false)} />
+        </>
     );
 };
 
