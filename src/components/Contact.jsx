@@ -18,6 +18,16 @@ const Contact = () => {
                             LinkedIn
                         </a>
                     </div>
+                    <a
+                        href="/sajith-ranpa-cv.pdf"
+                        download="Sajith-Ranpa-CV"
+                        className="inline-flex items-center gap-1.5 mt-6 text-teal-400 text-sm font-medium no-underline hover:underline transition-all"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 5v14M5 12l7 7 7-7" />
+                        </svg>
+                        Download CV
+                    </a>
                 </div>
             </div>
         </section>

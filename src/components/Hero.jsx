@@ -37,6 +37,16 @@ const Hero = () => {
                             >
                                 Let's Connect
                             </a>
+                            <a
+                                href="/sajith-ranpa-cv.pdf"
+                                download="Sajith-Ranpa-CV"
+                                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border-2 border-slate-600 text-base font-bold rounded-lg text-white bg-transparent hover:bg-slate-800 hover:border-slate-500 transition-colors"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M12 5v14M5 12l7 7 7-7" />
+                                </svg>
+                                Download CV
+                            </a>
                         </div>
 
                         {/* Proof Metrics Layer */}
