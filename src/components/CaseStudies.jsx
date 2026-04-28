@@ -293,11 +293,11 @@ const CaseStudies = () => {
                             {selectedCase.stats?.length > 0 && (
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
                                     {selectedCase.stats.map((stat, idx) => (
-                                        <div key={idx} className="bg-slate-800/80 backdrop-blur-sm border border-slate-700/50 rounded-xl p-5 flex flex-col items-center sm:items-start text-center sm:text-left shadow-lg">
-                                            <span className="text-2xl sm:text-3xl font-black text-white block mb-1">
+                                        <div key={idx} className="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 flex flex-col items-center sm:items-start text-center sm:text-left shadow-sm">
+                                            <span className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white block mb-1">
                                                 {stat.value}
                                             </span>
-                                            <span className="text-xs sm:text-sm font-medium text-slate-400 leading-snug">
+                                            <span className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 leading-snug">
                                                 {stat.label}
                                             </span>
                                         </div>

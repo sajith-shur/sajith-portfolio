@@ -28,7 +28,7 @@ const Experience = () => {
     ];
 
     return (
-        <section id="experience" className="py-20 bg-white dark:bg-slate-900">
+        <section id="experience" className="py-20 bg-slate-50 dark:bg-slate-800">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="lg:text-center mb-12">
                     <h2 className="text-sm sm:text-base text-teal-400 font-bold tracking-widest uppercase mb-3">Career Path</h2>
@@ -43,7 +43,7 @@ const Experience = () => {
                             {/* Timeline dot */}
                             <div className="absolute -left-1.5 top-1.5 w-3 h-3 bg-teal-400 rounded-full md:hidden"></div>
 
-                            <div className="bg-slate-50 dark:bg-slate-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow h-full">
+                            <div className="bg-white dark:bg-slate-900 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow h-full">
                                 <span className="text-xs font-bold text-teal-400 uppercase tracking-widest">{exp.period}</span>
                                 <h3 className="mt-3 text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">{exp.title}</h3>
                                 <p className="text-gray-500 dark:text-slate-400 font-semibold mb-5">{exp.company}</p>
