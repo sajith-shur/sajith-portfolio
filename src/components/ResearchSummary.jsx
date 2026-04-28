@@ -1,10 +1,19 @@
 import React, { useEffect } from 'react';
 
-const ResearchSummary = ({ onBack }) => {
-    // Scroll to top when the component mounts
+const ResearchSummary = ({ isOpen, onClose }) => {
+    // Lock body scroll when modal is open
     useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+
+    if (!isOpen) return null;
 
     const findings = [
         {
@@ -30,134 +39,131 @@ const ResearchSummary = ({ onBack }) => {
     ];
 
     return (
-        <div className="pt-20 pb-24 bg-slate-50 dark:bg-slate-900">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="fixed inset-0 z-[100] flex items-start justify-center pt-16 pb-8 px-4 sm:px-6">
+            {/* Backdrop */}
+            <div
+                className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity"
+                onClick={onClose}
+                aria-hidden="true"
+            />
 
-                {/* Back Button */}
+            {/* Modal Panel */}
+            <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto transform transition-all border border-slate-200 dark:border-slate-700">
+
+                {/* Decorative header bar */}
+                <div className="h-28 bg-gradient-to-r from-teal-500/20 to-blue-500/20 w-full rounded-t-2xl flex items-end px-8 pb-5 shrink-0">
+                    <div className="w-14 h-14 bg-white dark:bg-slate-800 rounded-2xl shadow-lg flex items-center justify-center translate-y-7 border-4 border-white dark:border-slate-900">
+                        <svg className="w-7 h-7 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                </div>
+
+                {/* Close Button */}
                 <button
-                    onClick={onBack}
-                    className="group inline-flex items-center text-sm font-semibold text-slate-500 hover:text-teal-600 dark:text-slate-400 dark:hover:text-teal-400 transition-colors mb-10"
+                    onClick={onClose}
+                    className="absolute top-4 right-4 p-2 bg-white/50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-700 rounded-full text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors backdrop-blur-md"
+                    aria-label="Close research summary"
                 >
-                    <svg className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                    Back to Portfolio
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                 </button>
 
-                {/* Header */}
-                <div className="mb-16">
-                    <h2 className="inline-block px-3 py-1 mb-4 rounded-full text-xs font-extrabold uppercase tracking-widest text-teal-600 bg-teal-50 dark:text-cyan-400 dark:bg-teal-900/30 border border-teal-100 dark:border-teal-800/50">
-                        Academic Research
-                    </h2>
-                    <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight mb-8">
-                        AI Personalisation in E-Commerce
-                    </h1>
-                    <span className="inline-flex items-center px-4 py-2 rounded-md text-sm font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">
-                        <svg className="w-4 h-4 mr-2 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                        Based on 12 semi-structured interviews with international students in the UK.
-                    </span>
-                </div>
+                {/* Scrollable body */}
+                <div className="px-6 sm:px-10 pt-12 pb-12">
 
-                {/* Content Sections */}
-                <div className="prose prose-xl dark:prose-invert prose-slate max-w-none text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-
+                    {/* Header */}
                     <div className="mb-12">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Overview</h2>
-                        <p className="leading-relaxed">
-                            This research explored how AI-driven personalised recommendations influence the purchasing behaviour of international students in the UK. The study focused on how users experience convenience, trust, privacy concerns, cultural relevance, and the wider effect of personalisation on online shopping decisions.
-                        </p>
+                        <span className="inline-block px-3 py-1 mb-4 rounded-full text-xs font-extrabold uppercase tracking-widest text-teal-600 bg-teal-50 dark:text-cyan-400 dark:bg-teal-900/30 border border-teal-100 dark:border-teal-800/50">
+                            Academic Research
+                        </span>
+                        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight mb-6">
+                            AI Personalisation in E-Commerce
+                        </h2>
+                        <span className="inline-flex items-center px-4 py-2 rounded-md text-sm font-semibold bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">
+                            <svg className="w-4 h-4 mr-2 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                            Based on 12 semi-structured interviews with international students in the UK.
+                        </span>
                     </div>
 
+                    {/* Content sections */}
+                    <div className="prose prose-lg dark:prose-invert prose-slate max-w-none text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                        <div className="mb-10">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Overview</h3>
+                            <p>This research explored how AI-driven personalised recommendations influence the purchasing behaviour of international students in the UK. The study focused on how users experience convenience, trust, privacy concerns, cultural relevance, and the wider effect of personalisation on online shopping decisions.</p>
+                        </div>
+                        <div className="mb-10">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Research Context</h3>
+                            <p>AI-powered recommendation systems have become a major part of e-commerce, helping platforms deliver more relevant product suggestions, improve engagement, and support customer retention. My dissertation examined this tension through the lens of international students in the UK — an under-researched but economically significant and culturally diverse consumer segment.</p>
+                        </div>
+                        <div className="mb-10">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Research Aim</h3>
+                            <p className="mb-3">The aim was to understand how AI-driven personalised recommendations affect the purchasing behaviour of international students on UK e-commerce platforms, focusing on:</p>
+                            <ul className="list-disc pl-5 space-y-1.5 marker:text-teal-500">
+                                <li>how students perceive and engage with personalised recommendations</li>
+                                <li>which cultural, behavioural, and demographic factors shape their responses</li>
+                                <li>how privacy concerns influence acceptance and trust</li>
+                            </ul>
+                        </div>
+                        <div className="mb-12">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Methodology</h3>
+                            <p>A qualitative research design based on <strong className="text-gray-900 dark:text-white font-bold">12 semi-structured interviews</strong> with international students in the UK. Thematic analysis identified recurring patterns around engagement, privacy, trust, cultural relevance, and the behavioural effects of recommendation systems.</p>
+                        </div>
+                    </div>
+
+                    {/* Key Findings cards */}
                     <div className="mb-12">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Research Context</h2>
-                        <p className="leading-relaxed">
-                            AI-powered recommendation systems have become a major part of e-commerce, helping platforms deliver more relevant product suggestions, improve engagement, and support customer retention. At the same time, concerns around privacy, transparency, and over-personalisation continue to shape how consumers respond to these systems. My dissertation examined this tension through the lens of international students in the UK, an under-researched but economically significant and culturally diverse consumer segment.
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-5">Key Findings</h3>
+                        <div className="space-y-4">
+                            {findings.map((finding, index) => (
+                                <div key={index} className="bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-xl p-6 shadow-sm">
+                                    <h4 className="text-base font-bold text-gray-900 dark:text-white mb-2">{finding.title}</h4>
+                                    <p className="text-[15px] text-gray-600 dark:text-slate-300 leading-relaxed">{finding.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Practical implications */}
+                    <div className="prose prose-lg dark:prose-invert prose-slate max-w-none text-slate-600 dark:text-slate-300 leading-relaxed font-medium mb-12">
+                        <div className="mb-10">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Practical Implications</h3>
+                            <p className="mb-3">Effective AI personalisation depends on users feeling understood, respected, and informed. For marketers and CRM teams, the findings point to:</p>
+                            <ul className="list-disc pl-5 space-y-1.5 marker:text-teal-500">
+                                <li>improving transparency around data collection and recommendation logic</li>
+                                <li>reducing intrusive or repetitive targeting</li>
+                                <li>accounting for cultural and financial context in personalisation</li>
+                                <li>giving users clearer control over preferences and privacy settings</li>
+                            </ul>
+                        </div>
+                        <div className="mb-10">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Why This Matters</h3>
+                            <p>International students represent a diverse and globally relevant consumer group whose response to AI personalisation is rarely explored. This dissertation shows that convenience alone is not enough — trust, cultural relevance, and ethical data use are equally important.</p>
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Research Limitations</h3>
+                            <p>The study used a small qualitative sample of 12 UK-based participants. The findings offer depth and insight, but should not be treated as universally representative. Future research could expand the sample, include more regions, and combine qualitative interviews with quantitative data.</p>
+                        </div>
+                    </div>
+
+                    {/* Quote */}
+                    <div className="border-l-4 border-teal-500 pl-6 py-2 mb-10">
+                        <p className="text-lg text-gray-900 dark:text-white font-medium leading-relaxed italic">
+                            "This dissertation strengthened my interest in the intersection of customer insight, digital experience, AI personalisation, and ethical marketing strategy."
                         </p>
                     </div>
 
-                    <div className="mb-12">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Research Aim</h2>
-                        <p className="leading-relaxed mb-4">
-                            The aim of the study was to understand how AI-driven personalised recommendations affect the purchasing behaviour of international students on e-commerce platforms in the UK. The research focused on three areas:
-                        </p>
-                        <ul className="list-disc pl-5 space-y-2 marker:text-teal-500">
-                            <li>how international students perceive and engage with personalised recommendations</li>
-                            <li>which cultural, behavioural, and demographic factors shape their responses</li>
-                            <li>how privacy concerns influence acceptance and trust in these systems</li>
-                        </ul>
-                    </div>
-
-                    <div className="mb-16">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Methodology</h2>
-                        <p className="leading-relaxed">
-                            The project used a qualitative research design based on <strong className="text-gray-900 dark:text-white font-bold">12 semi-structured interviews</strong> with international students in the UK. A thematic analysis approach was used to identify recurring patterns across the data, with themes developed around engagement, privacy, trust, cultural relevance, and the behavioural effects of recommendation systems.
-                        </p>
-                    </div>
-
-                </div>
-
-                {/* Insight Cards */}
-                <div className="mb-16">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Key Findings</h2>
-                    <div className="space-y-6">
-                        {findings.map((finding, index) => (
-                            <div key={index} className="bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-[1.25rem] p-8 sm:p-10 shadow-sm">
-                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                                    {finding.title}
-                                </h3>
-                                <p className="text-[16px] text-gray-600 dark:text-slate-300 leading-relaxed">
-                                    {finding.description}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* More Content Sections */}
-                <div className="prose prose-xl dark:prose-invert prose-slate max-w-none text-slate-600 dark:text-slate-300 mb-16 leading-relaxed font-medium">
-
-                    <div className="mb-12">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Practical Implications</h2>
-                        <p className="leading-relaxed mb-4">
-                            This research suggests that effective AI personalisation is not only about recommendation accuracy. It also depends on whether users feel understood, respected, and informed. For marketers, CRM teams, and e-commerce platforms, the findings point to several priorities:
-                        </p>
-                        <ul className="list-disc pl-5 space-y-2 marker:text-teal-500">
-                            <li>improve transparency around data collection and recommendation logic</li>
-                            <li>reduce intrusive or repetitive targeting</li>
-                            <li>account for cultural and financial context in personalisation</li>
-                            <li>give users clearer control over preferences and privacy settings</li>
-                        </ul>
-                    </div>
-
-                    <div className="mb-14 mt-20">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Why This Matters</h2>
-                        <p className="leading-relaxed">
-                            International students represent a diverse and globally relevant consumer group, yet their response to AI-driven e-commerce personalisation is not widely explored in existing research. This dissertation contributes both academic and practical insight by showing that convenience alone is not enough. Trust, cultural relevance, and ethical data use are equally important in shaping how people respond to AI-powered customer experiences.
-                        </p>
-                    </div>
-
-                    <div className="mb-12 mt-20">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Research Limitations</h2>
-                        <p className="leading-relaxed">
-                            The study was based on a relatively small qualitative sample of 12 participants, with a UK-based focus and limited cultural spread. That means the findings offer depth and insight, but should not be treated as universally representative. Future research could expand the sample, include more regions, and combine qualitative interviews with quantitative data.
-                        </p>
-                    </div>
-
-                </div>
-
-                <div className="border-t border-slate-200 dark:border-slate-700/50 pt-16 pb-8 text-center">
-                    <p className="text-xl sm:text-2xl font-medium text-gray-900 dark:text-white leading-relaxed text-balance max-w-3xl mx-auto italic mb-12">
-                        "This dissertation strengthened my interest in the intersection of customer insight, digital experience, AI personalisation, and ethical marketing strategy."
-                    </p>
-
-                    <div className="flex items-center justify-center">
+                    {/* Footer close button */}
+                    <div className="pt-6 border-t border-slate-200 dark:border-slate-700/50 flex justify-end">
                         <button
-                            onClick={onBack}
-                            className="inline-flex items-center justify-center px-8 py-3.5 border border-transparent text-base font-bold rounded-lg text-slate-900 bg-teal-400 hover:bg-teal-300 transition-colors shadow-[0_0_20px_rgba(45,212,191,0.3)] hover:shadow-[0_0_25px_rgba(45,212,191,0.5)] w-full sm:w-auto"
+                            onClick={onClose}
+                            className="px-6 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-900 dark:text-white font-medium rounded-lg transition-colors"
                         >
-                            Back to Portfolio
+                            Close
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
     );

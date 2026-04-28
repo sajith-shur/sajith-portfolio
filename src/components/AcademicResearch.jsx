@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ResearchSummary from './ResearchSummary';
 
-const AcademicResearch = ({ onNavigate }) => {
+const AcademicResearch = () => {
+    const [isResearchOpen, setIsResearchOpen] = useState(false);
     const findings = [
         {
             title: "Consumer Convenience",
@@ -61,10 +63,7 @@ const AcademicResearch = ({ onNavigate }) => {
                         Study Overview
                     </span>
                     <button
-                        onClick={(e) => {
-                            e.preventDefault();
-                            if (onNavigate) onNavigate();
-                        }}
+                        onClick={() => setIsResearchOpen(true)}
                         className="group/btn inline-flex items-center justify-center px-6 py-2.5 border border-slate-300 dark:border-slate-600 text-[15px] font-bold rounded-full text-slate-700 dark:text-white bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 dark:focus:ring-offset-slate-900 cursor-pointer"
                     >
                         View Research Summary
@@ -73,6 +72,8 @@ const AcademicResearch = ({ onNavigate }) => {
                 </div>
             </div>
         </section>
+
+        <ResearchSummary isOpen={isResearchOpen} onClose={() => setIsResearchOpen(false)} />
     );
 };
 
