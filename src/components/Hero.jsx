@@ -10,7 +10,7 @@ const Hero = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
 
                     {/* Left Column: Content */}
-                    <div className="flex flex-col text-center lg:text-left order-2 lg:order-1">
+                    <div className="flex flex-col text-center lg:text-left order-1">
                         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500 mb-4 animate-fade-in-up">
                             Sajith Ranpa
                         </h1>
@@ -67,7 +67,7 @@ const Hero = () => {
                     </div>
 
                     {/* Right Column: Image */}
-                    <div className="flex justify-center lg:justify-end order-1 lg:order-2 mb-10 lg:mb-0">
+                    <div className="flex justify-center lg:justify-end order-2 mb-10 lg:mb-0">
                         <div className="relative group w-[300px] h-[400px] sm:w-[380px] sm:h-[480px] lg:w-[460px] lg:h-[560px]">
                             {/* Decorative Glow */}
                             <div className="absolute inset-0 bg-gradient-to-tr from-teal-500/40 to-blue-500/40 rounded-[2rem] blur-[50px] opacity-50 group-hover:opacity-80 transition-opacity duration-700"></div>
