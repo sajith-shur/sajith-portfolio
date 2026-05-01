@@ -247,7 +247,7 @@ const CaseStudies = () => {
 
             {/* Modal Overlay */}
             {selectedCase && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center pt-24 pb-8 px-4 sm:px-6">
+                <div className="fixed inset-0 z-[100] overflow-y-auto">
                     {/* Backdrop */}
                     <div
                         className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity"
@@ -255,8 +255,11 @@ const CaseStudies = () => {
                         aria-hidden="true"
                     ></div>
 
+                    {/* Scroll + centering wrapper */}
+                    <div className="flex min-h-full items-center justify-center p-4 sm:p-8">
+
                     {/* Modal Content */}
-                    <div className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-y-auto transform transition-all border border-slate-200 dark:border-slate-700">
+                    <div className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-4xl w-full transform transition-all border border-slate-200 dark:border-slate-700">
 
                         {/* Header Image (Optional Decorative) */}
                         <div className="h-32 bg-gradient-to-r from-teal-500/20 to-blue-500/20 w-full rounded-t-2xl flex items-end px-8 pb-6">
@@ -567,7 +570,7 @@ const CaseStudies = () => {
                                 <div className="mb-6">
                                     <div className="border-l-4 border-teal-500 pl-6 py-2">
                                         <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-3">Key Takeaway</p>
-                                        <p className="text-xl text-white font-medium leading-relaxed tracking-tight italic">
+                                        <p className="text-xl text-gray-900 dark:text-white font-medium leading-relaxed tracking-tight italic">
                                             "{selectedCase.takeaway}"
                                         </p>
                                     </div>
@@ -585,6 +588,8 @@ const CaseStudies = () => {
                             </div>
                         </div>
                     </div>
+
+                    </div>{/* end scroll+centering wrapper */}
                 </div>
             )}
         </section>
